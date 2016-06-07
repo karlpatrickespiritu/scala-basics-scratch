@@ -141,7 +141,12 @@ object ScalaTutorial {
 
 
 		/********** ARRAYS *********/
-		
-		
+		val testNums = new Array[Int](20);
+
+		val friends  = Array("Bob", "Tom");
+
+		println(testNums);
+
+
 	}
 }
