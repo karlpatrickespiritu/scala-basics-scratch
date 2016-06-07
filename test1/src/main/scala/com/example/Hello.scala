@@ -93,14 +93,55 @@ object ScalaTutorial {
 
 
 		/******** STRINGS ***********/
-		var sTestString = "I am a string hehehe"
+		// var sTestString = "I am a string hehehe"
 
-		println("Third: " + sTestString(3))
-		println("length " + sTestString.length)
-		println(sTestString.concat(" hahaaha"))
-		println("test".equals("test"))
-		println(sTestString.indexOf("hehehe"));
+		// println("Third: " + sTestString(3))
+		// println("length " + sTestString.length)
+		// println(sTestString.concat(" hahaaha"))
+		// println("test".equals("test"))
+		// println(sTestString.indexOf("hehehe"));
 
 
+		/***** FUNCTIONS ********/
+
+		// def getSum (num1: Int = 1, num2: Int = 1) : Int = {
+		// 	return num1 + num2
+		// }
+
+		// println(getSum(5, 4));
+
+
+		// no return function
+		// def noReturn () : Unit = {
+		// 	println("I have no return!")
+		// }
+
+		// noReturn
+
+		// bunch of arguments
+		// def bunchArgs (arguments: Int*): Int = {
+		// 	var sum: Int = 0
+		// 	for (argument <- arguments) {
+		// 		sum += argument
+		// 	} 
+		// 	return sum
+		// }
+
+		// println("Bunch of ints sum: " + bunchArgs(1, 2, 3, 5))
+
+		// recursion
+		// def factorial (num: BigInt): BigInt = {
+		// 	if (num <= 1) 
+		// 	 return 1
+		// 	else 
+		// 	 return num * factorial(num - 1)
+		// }
+
+		// println("factorial of 4: " + factorial(4))
+
+
+		/********** ARRAYS *********/
+		
+		
 	}
 }
