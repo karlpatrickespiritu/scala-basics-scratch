@@ -9,6 +9,8 @@ import scala.io.Source
 object ScalaTutorial {
 
 	def main(args: Array[String]) {
+
+		/********* LOOPS ************/
 		// var i = 0 
 
 		// while (i <= 10) {
@@ -72,6 +74,33 @@ object ScalaTutorial {
 
 		// printf("You guessed the secret number %d\n", 15)
 
-	}
+		/******* PRINTING *******/
 
+		// val name = "Derek"
+		// val age = 39
+		// val weight = 175.1
+
+		// println(s"Hello $name")
+		// println(f"I am ${age + 1} and weights $weight%.2f") // 2 decimal places
+
+		// printf("'%5d'\n", 6) // justified
+ 	// 	printf("'%-5d'\n", 6)
+
+		// %c - char
+		// %d - integer types
+		// %f - floating points
+		// %s - strings
+
+
+		/******** STRINGS ***********/
+		var sTestString = "I am a string hehehe"
+
+		println("Third: " + sTestString(3))
+		println("length " + sTestString.length)
+		println(sTestString.concat(" hahaaha"))
+		println("test".equals("test"))
+		println(sTestString.indexOf("hehehe"));
+
+
+	}
 }
