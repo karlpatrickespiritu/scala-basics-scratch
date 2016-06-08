@@ -1,4 +1,4 @@
-package com.example
+// package com.example
 
 // http://scala-exercises.47deg.com/koans#valandvar
 
@@ -14,29 +14,54 @@ object Hello {
   			(7, "Karl")
   		)
 
+  val personList = List(
+        Person("karl", 18),
+        Person("cams", 19),
+        Person("mikel", 20)
+      )
+
   def main(args: Array[String]): Unit = {
-  	println("madam: " + palindrome("madam")) 
-  	println("karl: " + palindrome("karl"))
+  	// println("madam: " + palindrome("madam")) 
+  	// println("karl: " + palindrome("karl"))
 
-  	println("======================");
+  	// println("======================");
 
-  	println("3: " + fizzbuzz(3))
-  	println("5: " + fizzbuzz(5))
-  	println("15: " + fizzbuzz(15))
+  	// println("3: " + fizzbuzz(3))
+  	// println("5: " + fizzbuzz(5))
+  	// println("15: " + fizzbuzz(15))
 
-  	println("======================");
+  	// println("======================");
 
-  	processList(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+  	// processList(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
   	
-  	println("======================");
+  	// println("======================");
 
-  	println("Karl: " + findByName("Karl"))
-  	println("7: " + findById(7))
+  	// println("Karl: " + findByName("Karl"))
+  	// println("7: " + findById(7))
 
-  	println("======================");
+  	// println("======================");
 
-  	fib
+  	// fib
+    println("find karl: " + findByNamePerson("karl").get)
+    println(findByNamePerson("karl").get.toString)
+    println("find 19" + findByAgePerson(19).get)
+    println(findByAgePerson(19).get.toString)
   }
+
+  def findByNamePerson(name: String): Option[Person] = {
+    personList.filter(_.name == name).headOption
+  }
+
+  def findByAgePerson(age: Int): Option[Person] = {
+    personList.filter(_.age == age).headOption
+  }
+
+  case class Person(name: String, age: Int) {
+    override def toString(): String = {
+      s"My name is ${this.name}. ${this.age}"
+    }
+  }
+
 
   def fib (): Unit = {
   	var fib = List.empty[Int]
@@ -87,4 +112,7 @@ object Hello {
 
   	return ""
   }
-}
+
+
+
+}// end
