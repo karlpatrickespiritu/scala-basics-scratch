@@ -20,13 +20,13 @@ object Hello {
 
   	println("======================");
 
-	println("3: " + fizzbuzz(3))
-	println("5: " + fizzbuzz(5))
-	println("15: " + fizzbuzz(15))
+  	println("3: " + fizzbuzz(3))
+  	println("5: " + fizzbuzz(5))
+  	println("15: " + fizzbuzz(15))
 
-	println("======================");
+  	println("======================");
 
-	processList(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+  	processList(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
   	
   	println("======================");
 
@@ -57,7 +57,7 @@ object Hello {
 
   def findById(id: Int): Option[(Int, String)] = {
   	myList.filter(_._1 == id).headOption
-  }
+  } 
 
   def processList(list: List[Int]): Unit = {
   	println(list)
