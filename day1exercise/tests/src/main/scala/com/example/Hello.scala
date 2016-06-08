@@ -57,7 +57,7 @@ object Hello {
 
   def findById(id: Int): Option[(Int, String)] = {
   	myList.filter(_._1 == id).headOption
-  } 
+  }
 
   def processList(list: List[Int]): Unit = {
   	println(list)

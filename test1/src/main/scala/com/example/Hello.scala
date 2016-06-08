@@ -164,7 +164,64 @@ object ScalaTutorial {
 
 		// looping key-pairs
 		for ((k, v) <- employeesMutable) {
-			println(s"${k}: ${v}")
+			// println(s"${k}: ${v}")
+		}
+
+		/********** TOUPLES **************/
+		// normally immutable
+
+		var myTouple = (1.3, "Karl", 5)
+
+		// println(myTouple._1 + " " + myTouple._2) // accessing touple
+		// println(myTouple.toString())
+
+		// loop through touple 
+		// myTouple.productIterator.foreach { i => println(i) }
+
+
+		/********* CLASESS ***********/
+
+		var tiger = new Animal
+		tiger.setName("Karl")
+		tiger.setSound("Raawrrr!")
+		println(tiger.toString())
+
+		var dog = new Animal
+		dog.setName("Manna")
+		dog.setSound("Meows!")
+		println(dog.toString())
+
+	}
+
+
+	/********** CLASSES ****************/
+
+	class Animal(private var name: String = "", private var sound: String = "") {
+
+		private val id = Animal.generateId()
+
+		def getName(): String = name
+		
+		def getSound(): String = sound
+
+		def getId(): Int = { this.id }
+
+		def setSound(sound: String) {
+			this.sound = sound
+		}
+
+		def setName(sound: String) {
+			this.name = sound
+		}
+
+		override def toString(): String = {
+			s"${this.name} that has an ID of ${this.id} says ${this.sound}"
 		}
 	}
+
+	object Animal {
+		private var id = 0
+		def generateId(): Int = { id += 1; id }
+	}
+
 }
