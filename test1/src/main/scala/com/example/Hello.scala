@@ -184,21 +184,29 @@ object ScalaTutorial {
 		var tiger = new Animal
 		tiger.setName("Karl")
 		tiger.setSound("Raawrrr!")
-		println(tiger.toString())
+		// println(tiger.toString())
 
 		var dog = new Animal
 		dog.setName("Manna")
 		dog.setSound("Meows!")
-		println(dog.toString())
+		// println(dog.toString())
 
+		var simon = new Dog("Simon", "ayaw shimoon")
+		simon.setGrowl("shimonGrowls")
+		println(simon.toString())
 	}
 
 
 	/********** CLASSES ****************/
 
+	object Animal {
+		private var id = 0
+		def generateId(): Int = { id += 1; id }
+	}
+
 	class Animal(private var name: String = "", private var sound: String = "") {
 
-		private val id = Animal.generateId()
+		protected val id = Animal.generateId()
 
 		def getName(): String = name
 		
@@ -219,9 +227,19 @@ object ScalaTutorial {
 		}
 	}
 
-	object Animal {
-		private var id = 0
-		def generateId(): Int = { id += 1; id }
+	class Dog(name: String , sound: String, private var growl: String = "") extends Animal(name, sound) {
+		
+		def getGrowl(): String = {
+			this.growl
+		}
+
+		def setGrowl(growl: String) {
+			this.growl = growl
+		}
+
+		override def toString(): String = {
+			s"${this.getName()} that has an ID of ${this.getId()} says `${this.getSound()}` growl: ${this.getGrowl()}"
+		}
 	}
 
-}
+} // end of object
