@@ -193,8 +193,7 @@ object ScalaTutorial {
 
 		var simon = new Dog("Simon", "ayaw shimoon")
 		simon.setGrowl("shimonGrowls")
-		// println(simon.toString())
-		
+		println(simon.toString())
 	}
 
 
