@@ -4,6 +4,10 @@
 
 # A home page
 GET   /                           controllers.HomeController.index
+POST  /                           controllers.HomeController.indexAction
+GET   /users/delete/:id           controllers.HomeController.deleteUser(id: Int)
+GET   /users/update/:id           controllers.HomeController.showUpdate(id: Int)
+POST  /users/update/              controllers.HomeController.updateUser
 GET   /home                       controllers.HomeController.home
 GET   /about                      controllers.HomeController.about
 GET   /faq                        controllers.HomeController.faq

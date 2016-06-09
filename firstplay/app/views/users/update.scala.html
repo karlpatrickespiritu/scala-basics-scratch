@@ -1,0 +1,28 @@
+@(loginForm: Form[User])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, flash: Flash)
+@import helper._
+@helper.base {
+  <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
+  <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
+  <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
+} {
+  <section class="row">
+    @if(flash.get("msg")){
+      @flash.get("msg")
+    }
+    @form(action = routes.HomeController.updateUser, 'id -> "login-form") {
+      @inputText(
+        loginForm("username"),
+        '_showConstraints -> false,
+        '_label -> "Username"
+      )
+      @inputText(
+        loginForm("password"),
+        '_showConstraints -> false,
+        '_label -> "Password"
+      )
+
+      <input type="hidden" name="id" value="@loginForm("id").value" />
+      <input type="submit" name="submit" value="submit">
+      }
+  </section>
+}

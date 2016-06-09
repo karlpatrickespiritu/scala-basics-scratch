@@ -1,14 +1,42 @@
-@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+
+@(loginForm: Form[User], users: Seq[User] = List.empty[User])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, flash: Flash)
+@import helper._
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
 } {
+
+  <section>
+    <ul>
+      @for(user <- users) {
+        <li>
+          @user.username - @user.password
+          <a href="@routes.HomeController.deleteUser(user.id.get)">delete</a>
+          <a href="@routes.HomeController.showUpdate(user.id.get)">update</a>
+        </li>
+      }
+    </ul>
+  </section>
+
   <section class="row">
-    <div class="columns small-12" id="content">
-      @Messages("homecontroller.index.top")
-      <a href="#" data-toggle="modal">@Messages("homecontroller.index.openModal")</a>
-    </div>
+    @if(flash.get("msg")){
+      @flash.get("msg")
+    }
+    @form(action = routes.HomeController.indexAction, 'id -> "login-form") {
+      @inputText(
+        loginForm("username"),
+        '_showConstraints -> false,
+        '_label -> "Username"
+      )
+      @inputPassword(
+        loginForm("password"),
+        '_showConstraints -> false,
+        '_label -> "Password"
+      )
+
+      <input type="submit" name="submit" value="submit">
+    }
   </section>
 
 

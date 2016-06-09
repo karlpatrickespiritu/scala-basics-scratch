@@ -1,12 +1,12 @@
-@(list: List[User])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@import models.Users.User
+@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
 } {
+  <hr>
   <ul>
-    @for(person <- list) {
-      <li>@person.name is @person.age yeals old.</li>
-    }
+    Home!
   </ul>
 }
