@@ -1,5 +1,5 @@
 @import models.Contact
-@(contacts: Seq[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@(contacts: Seq[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, flash: Flash)
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
@@ -8,6 +8,14 @@
   <section class="row phonebook">
     <div class="columns medium-12" id="content">
       <h1>Phonebook</h1>
+
+      @if(flash.get("message")){
+        <div class="callout success">
+          <h5>Success!</h5>
+          <p>@flash.get("message")</p>
+        </div>
+      }
+
       <a href="@routes.PhoneBookController.add()" class="button float-right"><i class="fa fa-plus" aria-hidden="true"></i>Add Contact</a>
 
       <div class="phonebook-list">

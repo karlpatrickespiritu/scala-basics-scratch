@@ -1,4 +1,4 @@
-@(contactForm: Form[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@(contactForm: Form[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, flash: Flash)
 @import helper._
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
@@ -18,6 +18,7 @@
       <div class="row">
         <div class="medium-6 medium-offset-3 columns">
         @form(action = routes.PhoneBookController.formPost()) {
+
           @* Adds ID if operation is update *@
           @if(contactForm("id").value) {
             <input type="hidden" name="id" value="@contactForm("id").value" />
