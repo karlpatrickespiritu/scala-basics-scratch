@@ -33,6 +33,8 @@ class PhoneBookController @Inject() (
     )(Contact.apply) (Contact.unapply)
   }
 
+  val phoneBookPage = routes.PhoneBookController.index()
+
   /**
     * Create an Action to render an HTML page.
     * The configuration in the `routes` file means that this method
@@ -45,19 +47,33 @@ class PhoneBookController @Inject() (
     }
   }
 
-  def add = Action { implicit request =>
-    Ok(views.html.phonebook.add(contactForm))
+  def deleteById(id: Int) = Action.async { implicit request =>
+    Contacts.deleteById(id).map { _ => Redirect(phoneBookPage) }
   }
 
-  def addPost = Action { implicit request =>
+  def add = Action { implicit request =>
+    Ok(views.html.phonebook.phonebookform(contactForm))
+  }
+
+  def formPost = Action.async { implicit request =>
     contactForm.bindFromRequest.fold(
       formErrors => {
-        BadRequest(views.html.phonebook.add(formErrors))
+        Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors)))
       },
       contact => {
-        Ok(contact.toString)
+        val contactExits = !contact.id.isEmpty
+        if (contactExits)
+          Contacts.update(contact).map { _ => Redirect(phoneBookPage) }
+        else
+          Contacts.add(contact).map { _ => Redirect(phoneBookPage) }
       }
     )
+  }
+
+  def update(id: Int) = Action.async { implicit request =>
+    Contacts.findById(id).map {
+      contact => Ok(views.html.phonebook.phonebookform(contactForm.fill(contact.get)))
+    }
   }
 
 }

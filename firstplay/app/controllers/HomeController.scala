@@ -9,7 +9,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.data._
 import play.api.data.Forms._
 import ejisan.play.libs.{PageMetaApi, PageMetaSupport}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import models._

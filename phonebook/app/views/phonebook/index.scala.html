@@ -8,7 +8,7 @@
   <section class="row phonebook">
     <div class="columns medium-12" id="content">
       <h1>Phonebook</h1>
-      <a href="@routes.PhoneBookController.add()" class="button float-right">Add Contact</a>
+      <a href="@routes.PhoneBookController.add()" class="button float-right"><i class="fa fa-plus" aria-hidden="true"></i>Add Contact</a>
 
       <div class="phonebook-list">
         <table>
@@ -31,8 +31,8 @@
                   <td>@contact.phone</td>
                   <td>
                     <div class="button-group">
-                      <a class="button">Edit</a>
-                      <a class="button">Delete</a>
+                      <a href="@routes.PhoneBookController.update(contact.id.get)" class="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                      <a href="@routes.PhoneBookController.deleteById(contact.id.get)" class="button" onclick="return confirm('Are you sure?')"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </div>
                   </td>
                 </tr>

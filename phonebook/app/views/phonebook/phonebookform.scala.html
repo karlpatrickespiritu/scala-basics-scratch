@@ -1,6 +1,5 @@
-@import helper._
-
 @(contactForm: Form[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@import helper._
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
@@ -9,29 +8,47 @@
   <section class="row">
     <div class="columns small-12" id="content">
       <h1>Phonebook</h1>
-      <h3 class="subheader">Add Contact</h3>
 
-      @form(action = routes.PhoneBookController.addPost()) {
-        @inputText(
-          contactForm("first_name"),
-          '_showConstraints -> false,
-          '_label -> "First Name"
-        )
+      @if(contactForm("id").value) {
+        <h3 class="subheader">Update Contact</h3>
+      } else {
+        <h3 class="subheader">Add Contact</h3>
+      }
 
-        @inputText(
-          contactForm("last_name"),
-          '_showConstraints -> false,
-          '_label -> "Last Name"
-        )
+      <div class="row">
+        <div class="medium-6 medium-offset-3 columns">
+        @form(action = routes.PhoneBookController.formPost()) {
+          @* Adds ID if operation is update *@
+          @if(contactForm("id").value) {
+            <input type="hidden" name="id" value="@contactForm("id").value" />
+          }
 
-        @inputText(
-          contactForm("phone"),
-          '_showConstraints -> false,
-          '_label -> "Phone Number"
-        )
+          @inputText(
+            contactForm("first_name"),
+            '_showConstraints -> false,
+            '_label -> "First Name"
+          )
 
-        <button type="submit" class="button">Add</button>
-       }
+          @inputText(
+            contactForm("last_name"),
+            '_showConstraints -> false,
+            '_label -> "Last Name"
+          )
+
+          @inputText(
+            contactForm("phone"),
+            '_showConstraints -> false,
+            '_label -> "Phone Number"
+          )
+
+          @if(contactForm("id").value) {
+            <button type="submit" class="button medium-12 columns">Update</button>
+          } else {
+            <button type="submit" class="button medium-12 columns">Add</button>
+          }
+        }
+        </div>
+      </div>
 
     </div>
   </section>

@@ -2,4 +2,14 @@
 
 .main-container {
   padding-top: 10px;
+
+  /*** FORMS ***/
+  form .error {
+    color: red;
+  }
+
+  /*** THUMBNAILS ***/
+  .thumbnail {
+    img.default-thumbnail { width: 150px;}
+  }
 }
