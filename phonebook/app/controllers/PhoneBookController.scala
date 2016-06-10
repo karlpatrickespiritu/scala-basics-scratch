@@ -48,11 +48,17 @@ class PhoneBookController @Inject() (
   }
 
   def deleteById(id: Int) = Action.async { implicit request =>
-    Contacts.deleteById(id).map { _ => Redirect(phoneBookPage) }
+    Contacts.deleteById(id).map { _ => Redirect(phoneBookPage).flashing("message" -> s"Contact has been deleted.") }
   }
 
   def add = Action { implicit request =>
     Ok(views.html.phonebook.phonebookform(contactForm))
+  }
+
+  def update(id: Int) = Action.async { implicit request =>
+    Contacts.findById(id).map {
+      contact => Ok(views.html.phonebook.phonebookform(contactForm.fill(contact.get)))
+    }
   }
 
   def formPost = Action.async { implicit request =>
@@ -69,12 +75,6 @@ class PhoneBookController @Inject() (
           Contacts.add(contact).map { _ => Redirect(phoneBookPage).flashing("message" -> s"`${name}` has been created.") }
       }
     )
-  }
-
-  def update(id: Int) = Action.async { implicit request =>
-    Contacts.findById(id).map {
-      contact => Ok(views.html.phonebook.phonebookform(contactForm.fill(contact.get)))
-    }
   }
 
 }
