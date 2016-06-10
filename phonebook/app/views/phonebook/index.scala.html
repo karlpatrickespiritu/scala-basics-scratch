@@ -1,12 +1,46 @@
-@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@import models.Contact
+@(contacts: Seq[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
 } {
-  <section class="row">
+  <section class="row phonebook">
     <div class="columns medium-12" id="content">
       <h1>Phonebook</h1>
+      <a href="@routes.PhoneBookController.add()" class="button float-right">Add Contact</a>
+
+      <div class="phonebook-list">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Phone</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if(contacts) {
+              @for(contact <- contacts) {
+                <tr>
+                  <td>@contact.id</td>
+                  <td>@contact.first_name</td>
+                  <td>@contact.last_name</td>
+                  <td>@contact.phone</td>
+                  <td>
+                    <div class="button-group">
+                      <a class="button">Edit</a>
+                      <a class="button">Delete</a>
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 

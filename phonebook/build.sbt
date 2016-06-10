@@ -9,7 +9,11 @@ scalaVersion := "2.11.8"
 // Dependencies
 libraryDependencies ++= Seq(
   "com.ejisan" %% "play-pagemeta" % "1.2.1",
-  "com.ejisan" %% "play-form" % "2.0.2"
+  "com.ejisan" %% "play-form" % "2.0.2",
+  "com.typesafe.slick" %% "slick" % "3.1.1",
+  "com.typesafe.play" %% "play-slick" % "1.1.1",
+  "com.typesafe.play" %% "play-slick-evolutions" % "1.1.1",
+  "org.postgresql" % "postgresql" % "9.4.1208"
 )
 
 // Web Jars Dependencies

@@ -6,6 +6,8 @@
 GET   /                           controllers.HomeController.index
 # Phoneboook
 GET   /phonebook                  controllers.PhoneBookController.index
+GET   /phonebook/add              controllers.PhoneBookController.add
+POST  /phonebook/add              controllers.PhoneBookController.addPost
 # Web jars asset
 GET   /assets/libs/*file          controllers.WebJarAssets.at(file)
 # Map static resources from the /public folder to the /assets URL path
