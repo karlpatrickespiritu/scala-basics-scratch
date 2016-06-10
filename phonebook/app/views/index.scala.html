@@ -1,0 +1,25 @@
+@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@helper.base {
+  <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
+  <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
+  <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
+} {
+  <section class="row">
+    <div class="columns small-12" id="content">
+      <h1>Welcome Home!</h1>
+      <p class="subheader">There is beauty in space, and it is orderly. There is no weather, and there is regularity. It is predictable. Everything in space obeys the laws of physics. If you know these laws, and obey them, space will treat you kindly.</p>
+      <a href="@routes.PhoneBookController.index()" class="button">Go to Phonebook</a>
+    </div>
+  </section>
+
+  <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
+  <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
+  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>
+  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.box.js"))"></script>
+  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.triggers.js"))"></script>
+  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.mediaQuery.js"))"></script>
+  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.motion.js"))"></script>
+  <script src="@routes.WebJarAssets.at(wja.locate("foundation.reveal.js"))"></script>
+  <script src="@routes.Assets.versioned("scripts/main.js")"></script>
+  <script src="@routes.Assets.versioned("scripts/main2.js")"></script>
+}
