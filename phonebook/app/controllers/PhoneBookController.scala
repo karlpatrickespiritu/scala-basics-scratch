@@ -57,7 +57,8 @@ class PhoneBookController @Inject() (
 
   def update(id: Int) = Action.async { implicit request =>
     Contacts.findById(id).map {
-      contact => Ok(views.html.phonebook.phonebookform(contactForm.fill(contact.get)))
+      case Some(contact) => Ok(views.html.phonebook.phonebookform(contactForm.fill(contact)))
+      case None => NotFound
     }
   }
 
