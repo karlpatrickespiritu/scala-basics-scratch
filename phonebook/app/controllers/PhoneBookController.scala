@@ -48,7 +48,7 @@ class PhoneBookController @Inject() (
   }
 
   def deleteById(id: Int) = Action.async { implicit request =>
-    Contacts.deleteById(id).map { _ => Redirect(phoneBookPage).flashing("message" -> s"Contact has been deleted.") }
+    Contacts.deleteById(id).map { _ => Redirect(phoneBookPage).flashing("message" -> "Contact has been deleted.") }
   }
 
   def add = Action { implicit request =>
@@ -58,7 +58,7 @@ class PhoneBookController @Inject() (
   def update(id: Int) = Action.async { implicit request =>
     Contacts.findById(id).map {
       case Some(contact) => Ok(views.html.phonebook.phonebookform(contactForm.fill(contact)))
-      case None => NotFound
+      case None => Ok(views.html.httpcodes.code404())
     }
   }
 

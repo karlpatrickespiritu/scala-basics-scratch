@@ -24,7 +24,7 @@ class Contacts @Inject() (
     def last_name = column[String]("last_name", O.Length(255, true))
     def phone = column[String]("phone", O.Length(255, true))
 
-    def * = (id.?, first_name, last_name, phone) <> (Contact.tupled, Contact.unapply _)
+    def * = (id.?, first_name, last_name, phone) <> (Contact.tupled, Contact.unapply)
   }
 
   val contacts = TableQuery[ContactsTable]

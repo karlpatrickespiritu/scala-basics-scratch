@@ -1,0 +1,10 @@
+@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@helper.base {
+  <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
+  <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
+  <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
+} {
+  <h1>Page Not Found.</h1>
+  <h3 class="sub-header">:(</h3>
+  <a href="@routes.HomeController.index()" class="button">Go Home</a>
+}
