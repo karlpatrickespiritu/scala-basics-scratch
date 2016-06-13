@@ -29,6 +29,7 @@ class PhoneBookController @Inject() (
   val contactForm = Form {
     mapping(
       "id" -> optional(number),
+      "user_id" -> number,
       "first_name" -> nonEmptyText,
       "last_name" -> nonEmptyText,
       "phone" -> nonEmptyText
@@ -37,15 +38,14 @@ class PhoneBookController @Inject() (
 
   val phoneBookPage = routes.PhoneBookController.index()
 
-  /**
-    * Create an Action to render an HTML page.
-    * The configuration in the `routes` file means that this method
-    * will be called when the application receives a `GET` request with
-    * a path of `/`.
-    */
+  // TODO: ActionBuilder return
   def index = Authenticate.async { implicit request =>
-    Contacts.getAll().map {
-      contacts => Ok(views.html.phonebook.index(contacts))
+    request.session.get("connected").map { userId =>
+      Contacts.findByUserId(userId.toInt).map {
+        contacts => Ok(views.html.phonebook.index(contacts))
+      }
+    }.getOrElse {
+      Future.successful(Redirect(routes.AuthController.login()))
     }
   }
 
@@ -53,8 +53,13 @@ class PhoneBookController @Inject() (
     Contacts.deleteById(id).map { _ => Redirect(phoneBookPage).flashing("message" -> "Contact has been deleted.") }
   }
 
-  def add = Action { implicit request =>
-    Ok(views.html.phonebook.phonebookform(contactForm))
+  // TODO: ActionBuilder return
+  def add = Authenticate { implicit request =>
+    request.session.get("connected").map { userId =>
+      Ok(views.html.phonebook.phonebookform(contactForm, userId.toInt))
+    }.getOrElse {
+      Redirect(routes.AuthController.login())
+    }
   }
 
   def update(id: Int) = Action.async { implicit request =>
@@ -66,16 +71,15 @@ class PhoneBookController @Inject() (
 
   def formPost = Action.async { implicit request =>
     contactForm.bindFromRequest.fold(
-      formErrors => {
-        Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors)))
-      },
+      formErrors => Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors))),
       contact => {
         val name = contact.first_name + " " + contact.last_name
         val contactExits = !contact.id.isEmpty
-        if (contactExits)
+        if (contactExits) {
           Contacts.update(contact).map { _ => Redirect(phoneBookPage).flashing("message" -> s"`${name}` has been updated.") }
-        else
+        } else {
           Contacts.add(contact).map { _ => Redirect(phoneBookPage).flashing("message" -> s"`${name}` has been created.") }
+        }
       }
     )
   }

@@ -6,3 +6,5 @@ homecontroller.index.top = Hello Simple Web Site with Play Framework :)
 homecontroller.index.openModal = Click Me For A Modal
 homecontroller.index.modal.title = Awesome
 homecontroller.index.modal.messages = Sample modal
+
+authcontroller.login.incorrect = Incorrect credentials. Please try again.

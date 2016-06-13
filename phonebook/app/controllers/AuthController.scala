@@ -60,8 +60,8 @@ class AuthController @Inject()(
       },
       login => {
         Users.findByUserNameAndPassword(login.username, login.password).map {
-          case Some(user) => Ok(views.html.index()).withSession( "connected" -> user.username )
-          case None => Ok(views.html.httpcodes.code404())
+          case Some(user) => Redirect(routes.HomeController.index()).withSession("connected" -> user.id.get.toString)
+          case None => Redirect(routes.AuthController.login()).flashing("message" -> "Incorrect credentials. Please try agai")
         }
       }
     )
@@ -73,7 +73,7 @@ class AuthController @Inject()(
         Future.successful(BadRequest(views.html.auth.registration(formErrors)))
       },
       user => {
-        Users.add(user).map { _ => Redirect(routes.HomeController.index()) }
+        Users.add(user).map { _ => Redirect(routes.AuthController.login()) }
       }
     )
   }

@@ -1,5 +1,5 @@
 @import models.Login
-@(loginForm: Form[Login])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
+@(loginForm: Form[Login])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
 @import helper._
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
@@ -13,6 +13,10 @@
       <div class="row">
         <div class="medium-6 medium-offset-3 columns">
         @form(action = routes.AuthController.loginSubmission()) {
+
+          @if(flash.get("message")){
+            <p>@flash.get("message")</p>
+          }
 
           @inputText(
             loginForm("username"),

@@ -36,7 +36,13 @@ class Users @Inject() (
   def add(user: User): Future[Boolean] =
     db.run(users += user).map(_ > 0)
 
+  def findByUserName(username: String): Future[Option[User]] =
+    db.run(users.filter(_.username === username).result.headOption)
+
+  def findById(id: Int): Future[Option[User]] =
+    db.run(users.filter(_.id === id).result.headOption)
+
   def findByUserNameAndPassword(username: String, password: String): Future[Option[User]] =
-    db.run(users.filter(user => (user.username === username && user.password === password) ).result.headOption)
+    db.run(users.filter(user => (user.username === username && user.password === password)).result.headOption)
 
 }

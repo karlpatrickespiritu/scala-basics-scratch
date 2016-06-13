@@ -1,4 +1,5 @@
-@(contactForm: Form[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
+@import models.Contact
+@(contactForm: Form[Contact], userId: Int = 0)(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
 @import helper._
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
@@ -21,8 +22,10 @@
 
           @* Adds ID if operation is update *@
           @if(contactForm("id").value) {
-            <input type="hidden" name="id" value="@contactForm("id").value" />
+            <input type="hidden" name="id" value="@contactForm("id").value">
           }
+
+          <input type="hidden" name="user_id" value="@userId">
 
           @inputText(
             contactForm("first_name"),
