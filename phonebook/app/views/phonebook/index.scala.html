@@ -1,5 +1,5 @@
 @import models.Contact
-@(contacts: Seq[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, flash: Flash)
+@(contacts: Seq[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">

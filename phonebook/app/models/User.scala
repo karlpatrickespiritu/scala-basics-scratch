@@ -1,8 +1,9 @@
 package models
 
-case class Contact(
+case class User(
   id: Option[Int],
   first_name: String,
   last_name: String,
-  phone: String
+  username: String,
+  password: String
 )

@@ -6,6 +6,7 @@ import play.api.mvc._
 import play.api.i18n.{ I18nSupport, MessagesApi }
 
 import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
+import actions._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the

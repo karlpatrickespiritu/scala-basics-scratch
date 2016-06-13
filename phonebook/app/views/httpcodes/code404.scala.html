@@ -1,4 +1,4 @@
-@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets)
+@()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">

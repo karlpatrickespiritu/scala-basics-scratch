@@ -4,13 +4,23 @@
 
 # A home page
 GET   /                           controllers.HomeController.index
+
+# Authentication
+GET   /registration               controllers.AuthController.registration
+POST  /registration               controllers.AuthController.userSubmission
+GET   /login                      controllers.AuthController.login
+POST  /login                      controllers.AuthController.loginSubmission
+GET   /logout                     controllers.AuthController.logout
+
 # Phoneboook
 GET   /phonebook                  controllers.PhoneBookController.index
 GET   /phonebook/add              controllers.PhoneBookController.add
 POST  /phonebook/add              controllers.PhoneBookController.formPost
 GET   /phonebook/update/:id       controllers.PhoneBookController.update(id: Int)
 GET   /phonebook/delete/:id       controllers.PhoneBookController.deleteById(id: Int)
+
 # Web jars asset
 GET   /assets/libs/*file          controllers.WebJarAssets.at(file)
+
 # Map static resources from the /public folder to the /assets URL path
 GET   /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

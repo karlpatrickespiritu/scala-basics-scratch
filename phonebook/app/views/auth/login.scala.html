@@ -1,4 +1,5 @@
-@(contactForm: Form[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
+@import models.Login
+@(loginForm: Form[Login])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
 @import helper._
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
@@ -7,46 +8,25 @@
 } {
   <section class="row">
     <div class="columns small-12" id="content">
-      <h1>Phonebook</h1>
-
-      @if(contactForm("id").value) {
-        <h3 class="subheader">Update Contact</h3>
-      } else {
-        <h3 class="subheader">Add Contact</h3>
-      }
+      <h1>Login</h1>
 
       <div class="row">
         <div class="medium-6 medium-offset-3 columns">
-        @form(action = routes.PhoneBookController.formPost()) {
-
-          @* Adds ID if operation is update *@
-          @if(contactForm("id").value) {
-            <input type="hidden" name="id" value="@contactForm("id").value" />
-          }
+        @form(action = routes.AuthController.loginSubmission()) {
 
           @inputText(
-            contactForm("first_name"),
+            loginForm("username"),
             '_showConstraints -> false,
-            '_label -> "First Name"
+            '_label -> "Username"
           )
 
-          @inputText(
-            contactForm("last_name"),
+          @inputPassword(
+            loginForm("password"),
             '_showConstraints -> false,
-            '_label -> "Last Name"
+            '_label -> "Password"
           )
 
-          @inputText(
-            contactForm("phone"),
-            '_showConstraints -> false,
-            '_label -> "Phone Number"
-          )
-
-          @if(contactForm("id").value) {
-            <button type="submit" class="button medium-12 columns">Update</button>
-          } else {
-            <button type="submit" class="button medium-12 columns">Add</button>
-          }
+          <button type="submit" class="button medium-12 columns">Login</button>
         }
         </div>
       </div>

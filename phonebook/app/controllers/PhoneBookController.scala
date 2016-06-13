@@ -11,6 +11,7 @@ import scala.concurrent.Future
 
 import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import models._
+import actions._
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
@@ -21,6 +22,7 @@ class PhoneBookController @Inject() (
  val messagesApi: MessagesApi,
  val pageMetaApi: PageMetaApi,
  val Contacts: tables.Contacts,
+ val Authenticate: actions.Authenticate,
  implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
 
@@ -41,7 +43,7 @@ class PhoneBookController @Inject() (
     * will be called when the application receives a `GET` request with
     * a path of `/`.
     */
-  def index = Action.async { implicit request =>
+  def index = Authenticate.async { implicit request =>
     Contacts.getAll().map {
       contacts => Ok(views.html.phonebook.index(contacts))
     }

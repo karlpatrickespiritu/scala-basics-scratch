@@ -1,4 +1,4 @@
-@(header: Html = Html(""))(content: Html)(implicit requestHeader: RequestHeader, messages: Messages, pageMeta: PageMeta)
+@(header: Html = Html(""))(content: Html)(implicit requestHeader: RequestHeader, messages: Messages, pageMeta: PageMeta, session: Session)
 <!DOCTYPE html>
 <html lang="@messages.lang.code">
 <head>
@@ -23,8 +23,12 @@
       </div>
       <div class="top-bar-right">
         <ul class="menu">
-          <li><input type="search" placeholder="Search"></li>
-          <li><button type="button" class="button">Search</button></li>
+          @session.get("connected").map { user =>
+            <li><a href="@routes.AuthController.logout()" class="button">Logout</a></li>
+          }.getOrElse {
+            <li><a href="@routes.AuthController.login()" class="button">Login</a></li>
+            <li><a href="@routes.AuthController.registration()" class="button">Register</a></li>
+          }
         </ul>
       </div>
     </div>
