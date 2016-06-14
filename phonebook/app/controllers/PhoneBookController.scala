@@ -12,6 +12,7 @@ import scala.concurrent.Future
 import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import models._
 import actions._
+import forms.{ ContactsForm }
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
@@ -25,16 +26,6 @@ class PhoneBookController @Inject() (
  val Authenticate: actions.Authenticate,
  implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
-
-  val contactForm = Form {
-    mapping(
-      "id" -> optional(number),
-      "user_id" -> number,
-      "first_name" -> nonEmptyText,
-      "last_name" -> nonEmptyText,
-      "phone" -> nonEmptyText
-    )(Contact.apply) (Contact.unapply)
-  }
 
   val phoneBookPage = routes.PhoneBookController.index
 
@@ -53,34 +44,31 @@ class PhoneBookController @Inject() (
     Contacts.deleteById(id).map { _ => Redirect(phoneBookPage).flashing("message" -> "Contact has been deleted.") }
   }
 
-  // TODO: ActionBuilder return
   def add = Authenticate { implicit request =>
-    request.session.get("connected").map { userId =>
-      Ok(views.html.phonebook.phonebookform(contactForm, userId.toInt))
-    }.getOrElse {
-      Redirect(routes.AuthController.login())
-    }
+    Ok(views.html.phonebook.phonebookform())
   }
 
   def update(id: Int) = Action.async { implicit request =>
     Contacts.findById(id).map {
       case Some(contact) => {
-        Ok(views.html.phonebook.phonebookform(contactForm.fill(contact), contact.user_id))
+        Ok(views.html.phonebook.phonebookform(ContactsForm.contact.fill(contact)))
       }
       case None => Ok(views.html.httpcodes.code404())
     }
   }
 
   def formPost = Action.async { implicit request =>
-    contactForm.bindFromRequest.fold(
-      formErrors => Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors))),
+    ContactsForm.contact.bindFromRequest.fold(
+      formErrors =>  {
+        Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors)))
+      },
       contact => {
-        val name = contact.first_name + " " + contact.last_name
-        val contactExits = !contact.id.isEmpty
-        if (contactExits) {
-          Contacts.update(contact).map { _ => Redirect(phoneBookPage).flashing("message" -> s"`${name}` has been updated.") }
+        val name = contact.first_name.concat(" " + contact.last_name)
+        val isUpdate = !contact.id.isEmpty
+        if (isUpdate) {
+          Contacts.update(contact).map { _ => Redirect(routes.PhoneBookController.index()).flashing("message" -> s"`${name}` has been updated.") }
         } else {
-          Contacts.add(contact).map { _ => Redirect(phoneBookPage).flashing("message" -> s"`${name}` has been created.") }
+          Contacts.add(contact).map { _ => Redirect(routes.PhoneBookController.add()).flashing("message" -> s"`${name}` has been created.") }
         }
       }
     )

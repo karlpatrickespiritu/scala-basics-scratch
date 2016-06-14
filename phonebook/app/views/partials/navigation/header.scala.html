@@ -1,0 +1,28 @@
+@()(implicit messages: Messages, session: Session)
+<header>
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <ul class="menu">
+        <li><a href="@routes.HomeController.index()">Home</a></li>
+        <li><a href="@routes.PhoneBookController.index()">Phonebook</a></li>
+      </ul>
+    </div>
+    <div class="top-bar-right">
+      @session.get("connected").map { user =>
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li>
+            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> User</a>
+            <ul class="menu">
+                <li><a href="@routes.AuthController.logout()">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      }.getOrElse {
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li><a href="@routes.AuthController.login()">Login</a></li>
+          <li><a href="@routes.AuthController.registration()">Register</a></li>
+        </ul>
+      }
+    </div>
+  </div>
+</header>

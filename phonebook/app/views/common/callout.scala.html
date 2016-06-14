@@ -1,0 +1,5 @@
+@(callOut: String = "", title: String, message: String)(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
+<div class="callout @callOut">
+  <h5>@title</h5>
+  <p>@message</p>
+</div>

@@ -3,7 +3,7 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
-import play.api.i18n.{ I18nSupport, MessagesApi }
+import play.api.i18n.{ I18nSupport, MessagesApi, Messages }
 import play.api.data._
 import play.api.data.Forms._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -11,6 +11,7 @@ import scala.concurrent.Future
 
 import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import models._
+import forms._
 
 /**
   * This controller creates an `Action` to handle HTTP requests to the
@@ -24,25 +25,8 @@ class AuthController @Inject()(
  implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
 
-  val userForm = Form {
-    mapping(
-      "id" -> optional(number),
-      "first_name" -> nonEmptyText,
-      "last_name" -> nonEmptyText,
-      "username" -> nonEmptyText,
-      "password" -> nonEmptyText
-    ) (User.apply) (User.unapply)
-  }
-
-  val loginForm = Form {
-    mapping(
-      "username" -> nonEmptyText,
-      "password" -> nonEmptyText
-    ) (Login.apply) (Login.unapply)
-  }
-
   def login = Action { implicit request =>
-    Ok(views.html.auth.login(loginForm));
+    Ok(views.html.auth.login(UsersForm.login));
   }
 
   def logout = Action { implicit request =>
@@ -50,31 +34,25 @@ class AuthController @Inject()(
   }
 
   def registration = Action { implicit request =>
-    Ok(views.html.auth.registration(userForm));
+    Ok(views.html.auth.registration(UsersForm.user));
   }
 
   def loginSubmission = Action.async { implicit request =>
-    loginForm.bindFromRequest.fold(
-      formErrors => {
-        Future.successful(BadRequest(views.html.auth.login(loginForm)))
-      },
+    UsersForm.login.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(views.html.auth.login(formWithErrors))),
       login => {
         Users.findByUserNameAndPassword(login.username, login.password).map {
           case Some(user) => Redirect(routes.HomeController.index()).withSession("connected" -> user.id.get.toString)
-          case None => Redirect(routes.AuthController.login()).flashing("message" -> "Incorrect credentials. Please try agai")
+          case None => Redirect(routes.AuthController.login()).flashing("message" -> Messages("authcontroller.login.incorrect.username.password"))
         }
       }
     )
   }
 
   def userSubmission = Action.async { implicit request =>
-    userForm.bindFromRequest.fold(
-      formErrors => {
-        Future.successful(BadRequest(views.html.auth.registration(formErrors)))
-      },
-      user => {
-        Users.add(user).map { _ => Redirect(routes.AuthController.login()) }
-      }
+    UsersForm.user.bindFromRequest.fold(
+      formWithErrors => Future.successful(BadRequest(views.html.auth.registration(formWithErrors))),
+      user => Users.add(user).map { _ => Redirect(routes.AuthController.login()) }
     )
   }
 

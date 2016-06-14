@@ -7,4 +7,7 @@ homecontroller.index.openModal = Click Me For A Modal
 homecontroller.index.modal.title = Awesome
 homecontroller.index.modal.messages = Sample modal
 
-authcontroller.login.incorrect = Incorrect credentials. Please try again.
+callouts.title.success = Success!
+callouts.title.error = Opps!
+
+authcontroller.login.incorrect.username.password = Incorrect username of password. Please try again.

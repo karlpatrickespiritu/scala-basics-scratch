@@ -1,4 +1,4 @@
-@(header: Html = Html(""))(content: Html)(implicit requestHeader: RequestHeader, messages: Messages, pageMeta: PageMeta, session: Session)
+@(header: Html = Html(""))(content: Html)(footer: Html = Html(""))(implicit requestHeader: RequestHeader, messages: Messages, pageMeta: PageMeta, wja: WebJarAssets, session: Session)
 <!DOCTYPE html>
 <html lang="@messages.lang.code">
 <head>
@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  @partials.headerNav()
+  @partials.navigation.header()
 
   <div class="row">
     <div class="medium-12 columns main-container">
@@ -20,5 +20,6 @@
     </div>
   </div>
 
+  @footer
 </body>
 </html>

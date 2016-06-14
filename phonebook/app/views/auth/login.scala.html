@@ -1,6 +1,6 @@
 @import models.Login
-@(loginForm: Form[Login])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
 @import helper._
+@(loginForm: Form[Login])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
@@ -14,9 +14,11 @@
         <div class="medium-6 medium-offset-3 columns">
         @form(action = routes.AuthController.loginSubmission()) {
 
-          @if(flash.get("message")){
-            <p>@flash.get("message")</p>
+          @if(flash.get("message")) {
+            @common.callout("alert", Messages("callouts.title.error"), flash.get("message").get)
           }
+
+          @* common.inform(success, title, message)*@
 
           @inputText(
             loginForm("username"),
@@ -37,7 +39,7 @@
 
     </div>
   </section>
-
+} {
   <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>

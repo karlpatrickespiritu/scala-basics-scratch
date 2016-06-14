@@ -1,6 +1,7 @@
 @import models.Contact
-@(contactForm: Form[Contact], userId: Int = 0)(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
+@import forms.ContactsForm
 @import helper._
+@(contactForm: Form[Contact] = ContactsForm.contact)(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
 @helper.base {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
@@ -20,12 +21,17 @@
         <div class="medium-6 medium-offset-3 columns">
         @form(action = routes.PhoneBookController.formPost()) {
 
+
+          @if(flash.get("message")) {
+            @common.callout("success", Messages("callouts.title.success"), flash.get("message").get)
+          }
+
           @* Adds ID if operation is update *@
           @if(contactForm("id").value) {
             <input type="hidden" name="id" value="@contactForm("id").value">
           }
 
-          <input type="hidden" name="user_id" value="@userId">
+          <input type="hidden" name="user_id" value="@session.get("connected")">
 
           @inputText(
             contactForm("first_name"),
@@ -59,12 +65,12 @@
 
   <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.box.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.triggers.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.mediaQuery.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.motion.js"))"></script>
   <script src="@routes.WebJarAssets.at(wja.locate("foundation.reveal.js"))"></script>
   <script src="@routes.Assets.versioned("scripts/main.js")"></script>
   <script src="@routes.Assets.versioned("scripts/main2.js")"></script>
+} {
+
 }

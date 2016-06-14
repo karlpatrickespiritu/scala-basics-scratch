@@ -37,9 +37,12 @@ class Contacts @Inject() (
     */
   object ContactsQuery extends TableQuery(new ContactsTable(_)) {
     def insert(contact: Contact) = this += contact
-    def getAll = this.result
+    def getAll = this.sortBy(_.id.desc).result
     def findById(id: Int) = this.filter(_.id === id)
-    def findByUserId(userId: Int) = this.filter(_.user_id === userId)
+    def findByUserId(userId: Int) = this.filter(_.user_id === userId).sortBy(_.id.desc)
+    def findByFirstName(firstName: String) = this.filter(_.first_name === firstName)
+    def findByLastName(lastName: String) = this.filter(_.last_name === lastName)
+    def findByFirstNameAndLastName(firstName: String, lastName: String) = this.filter(contact => (contact.first_name === firstName && contact.last_name === lastName))
   }
 
   def update(contact: Contact): Future[Boolean] =
@@ -59,5 +62,8 @@ class Contacts @Inject() (
 
   def findByUserId(userId: Int): Future[Seq[Contact]] =
     db.run(ContactsQuery.findByUserId(userId).result)
+
+  def findByFirstNameAndLastName(firstName: String, lastName: String): Future[Option[Contact]] =
+    db.run(ContactsQuery.findByFirstNameAndLastName(firstName, lastName).result.headOption)
 
 }
