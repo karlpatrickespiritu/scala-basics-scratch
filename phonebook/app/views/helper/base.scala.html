@@ -12,27 +12,7 @@
 </head>
 <body>
 
-  @* TODO: Separate File *@
-  <header>
-    <div class="top-bar">
-      <div class="top-bar-left">
-        <ul class="menu">
-          <li><a href="@routes.HomeController.index()">Home</a></li>
-          <li><a href="@routes.PhoneBookController.index()">Phonebook</a></li>
-        </ul>
-      </div>
-      <div class="top-bar-right">
-        <ul class="menu">
-          @session.get("connected").map { user =>
-            <li><a href="@routes.AuthController.logout()" class="button">Logout</a></li>
-          }.getOrElse {
-            <li><a href="@routes.AuthController.login()" class="button">Login</a></li>
-            <li><a href="@routes.AuthController.registration()" class="button">Register</a></li>
-          }
-        </ul>
-      </div>
-    </div>
-  </header>
+  @partials.headerNav()
 
   <div class="row">
     <div class="medium-12 columns main-container">
