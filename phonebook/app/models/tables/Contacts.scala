@@ -27,29 +27,37 @@ class Contacts @Inject() (
     def last_name = column[String]("last_name", O.Length(255, true))
     def phone = column[String]("phone", O.Length(255, true))
 
-    def owner = foreignKey("user_id", user_id, users.users)(_.id, onUpdate = ForeignKeyAction.Restrict, onDelete = ForeignKeyAction.Cascade)
+    def owner = foreignKey("fk_user_id", user_id, users.UsersQuery)(_.id, onUpdate = ForeignKeyAction.Restrict, onDelete = ForeignKeyAction.Cascade)
 
     def * = (id.?, user_id, first_name, last_name, phone) <> (Contact.tupled, Contact.unapply)
   }
 
-  val contacts = TableQuery[ContactsTable]
+  /**
+    * Contacts Table Query
+    */
+  object ContactsQuery extends TableQuery(new ContactsTable(_)) {
+    def insert(contact: Contact) = this += contact
+    def getAll = this.result
+    def findById(id: Int) = this.filter(_.id === id)
+    def findByUserId(userId: Int) = this.filter(_.user_id === userId)
+  }
 
   def update(contact: Contact): Future[Boolean] =
-    db.run(contacts.filter( _.id === contact.id ).update(contact).map(_ > 0))
+    db.run(ContactsQuery.findById(contact.id.get).update(contact).map(_ > 0))
 
   def getAll(): Future[Seq[Contact]] =
-    db.run(contacts.result)
+    db.run(ContactsQuery.getAll)
 
   def add(contact: Contact): Future[Boolean] =
-    db.run(contacts += contact).map(_ > 0)
+    db.run(ContactsQuery.insert(contact)).map(_ > 0)
 
   def deleteById(id: Int): Future[Boolean] =
-    db.run(contacts.filter( _.id === id ).delete.map(_ > 0))
+    db.run(ContactsQuery.findById(id).delete.map(_ > 0))
 
   def findById(id: Int): Future[Option[Contact]] =
-    db.run(contacts.filter( _.id === id ).result.headOption)
+    db.run(ContactsQuery.findById(id).result.headOption)
 
   def findByUserId(userId: Int): Future[Seq[Contact]] =
-    db.run(contacts.filter( _.user_id === userId ).result)
+    db.run(ContactsQuery.findByUserId(userId).result)
 
 }

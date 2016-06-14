@@ -36,7 +36,7 @@ class PhoneBookController @Inject() (
     )(Contact.apply) (Contact.unapply)
   }
 
-  val phoneBookPage = routes.PhoneBookController.index()
+  val phoneBookPage = routes.PhoneBookController.index
 
   // TODO: ActionBuilder return
   def index = Authenticate.async { implicit request =>
@@ -64,7 +64,9 @@ class PhoneBookController @Inject() (
 
   def update(id: Int) = Action.async { implicit request =>
     Contacts.findById(id).map {
-      case Some(contact) => Ok(views.html.phonebook.phonebookform(contactForm.fill(contact)))
+      case Some(contact) => {
+        Ok(views.html.phonebook.phonebookform(contactForm.fill(contact), contact.user_id))
+      }
       case None => Ok(views.html.httpcodes.code404())
     }
   }

@@ -15,6 +15,18 @@ class Users @Inject() (
   import slick.jdbc.GetResult
 
   /**
+    * Users Table Query
+    */
+  object UsersQuery extends TableQuery(new UsersTable(_)) {
+    def insert(user: User) = this += user
+    def findById(id: Int) = this.filter(_.id === id)
+    def findByFirstName(firstName: String) = this.filter(_.first_name === firstName)
+    def findByLastName(lastName: String) = this.filter(_.last_name === lastName)
+    def findByUserName(userName: String) = this.filter(_.username === userName)
+    def findByUserNameAndPassword(userName: String, password: String) = this.filter(user => (user.username === userName && user.password === password))
+  }
+
+  /**
     * Table Definition
     * @param tag
     */
@@ -28,21 +40,19 @@ class Users @Inject() (
     def * = (id.?, first_name, last_name, username, password) <> (User.tupled, User.unapply)
   }
 
-  val users = TableQuery[UsersTable]
-
   def getAll(): Future[Seq[User]] =
-    db.run(users.result)
+    db.run(UsersQuery.result)
 
   def add(user: User): Future[Boolean] =
-    db.run(users += user).map(_ > 0)
+    db.run(UsersQuery.insert(user)).map(_ > 0)
 
   def findByUserName(username: String): Future[Option[User]] =
-    db.run(users.filter(_.username === username).result.headOption)
+    db.run(UsersQuery.findByUserName(username).result.headOption)
 
   def findById(id: Int): Future[Option[User]] =
-    db.run(users.filter(_.id === id).result.headOption)
+    db.run(UsersQuery.findById(id).result.headOption)
 
-  def findByUserNameAndPassword(username: String, password: String): Future[Option[User]] =
-    db.run(users.filter(user => (user.username === username && user.password === password)).result.headOption)
+  def findByUserNameAndPassword(userName: String, password: String): Future[Option[User]] =
+    db.run(UsersQuery.findByUserNameAndPassword(userName, password).result.headOption)
 
 }
