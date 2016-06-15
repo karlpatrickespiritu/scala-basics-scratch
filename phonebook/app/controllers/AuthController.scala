@@ -38,7 +38,14 @@ class AuthController @Inject()(
       formWithErrors => Future.successful(BadRequest(views.html.auth.login(formWithErrors))),
       login => {
         Users.findByUserNameAndPassword(login.username, login.password).map {
-          case Some(user) => Redirect(routes.HomeController.index()).withSession("connected" -> user.id.get.toString)
+          case Some(user) => {
+            Redirect(routes.HomeController.index())
+              .withSession(
+                request.session + ("connected" -> user.id.get.toString) + ("connectedUserName" -> user.userName)
+              )
+              // .withSession("connected" -> user.id.get.toString)
+              // .withSession("connectedUserName" -> user.userName)
+          }
           case None => Redirect(routes.AuthController.login()).flashing("message" -> Messages("authcontroller.login.incorrect.username.password"))
         }
       }

@@ -11,7 +11,9 @@
       @session.get("connected").map { user =>
         <ul class="dropdown menu" data-dropdown-menu>
           <li>
-            <a href="#"><i class="fa fa-user" aria-hidden="true"></i> User</a>
+            <a href="#"><i class="fa fa-user" aria-hidden="true"></i>
+              @session.get("connectedUserName").map { userName => @userName }
+            </a>
             <ul class="menu">
                 <li><a href="@routes.AuthController.logout()">Logout</a></li>
             </ul>
