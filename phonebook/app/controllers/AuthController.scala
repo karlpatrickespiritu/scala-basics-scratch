@@ -13,10 +13,6 @@ import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
 import models._
 import forms._
 
-/**
-  * This controller creates an `Action` to handle HTTP requests to the
-  * application's home page.
-  */
 @Singleton
 class AuthController @Inject()(
  val messagesApi: MessagesApi,

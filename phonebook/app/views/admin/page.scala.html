@@ -1,0 +1,30 @@
+@(head: Html = Html(""))(content: Html)(implicit req: RequestHeader, msg: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
+@helper.base {
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
+    <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
+    @* FROM CDN *@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    @head
+} {
+    @partials.admin.navigation.header()
+    <section class="row main-container">
+        <div class="columns small-12">
+        @content
+        </div>
+    </section>
+} {
+    <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.dropdownMenu.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.box.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.nest.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.triggers.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.mediaQuery.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.motion.js"))"></script>
+    <script src="@routes.WebJarAssets.at(wja.locate("foundation.reveal.js"))"></script>
+    <script src="@routes.Assets.versioned("scripts/main.js")"></script>
+    <script src="@routes.Assets.versioned("scripts/main2.js")"></script>
+}

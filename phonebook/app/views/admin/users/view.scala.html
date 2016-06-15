@@ -1,0 +1,27 @@
+@(user: User)(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
+@admin.page() {
+  <h1>User</h1>
+  <h3 class="subheader"><i class="fa fa-user" aria-hidden="true"></i>@user.fullName</h3>
+  <hr>
+  <h3>Contacts</h3>
+  <div class="contact-list">
+    <table class="hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+}

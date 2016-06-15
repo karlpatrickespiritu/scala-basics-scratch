@@ -6,6 +6,7 @@ import slick.profile.RelationalProfile
 import play.api.db.slick. { DatabaseConfigProvider, HasDatabaseConfigProvider }
 import scala.concurrent.ExecutionContext.Implicits.global
 import models._
+import models.tables._
 
 @Singleton
 class Users @Inject() (
@@ -40,8 +41,8 @@ class Users @Inject() (
     def * = (id.?, firstName, lastName, userName, password) <> (User.tupled, User.unapply)
   }
 
-  def getAll(): Future[Seq[User]] =
-    db.run(UsersQuery.result)
+  def getAll(limit: Int = 10, offset: Int = 0): Future[Seq[User]] =
+    db.run(UsersQuery.drop(offset).take(limit).result)
 
   def add(user: User): Future[Boolean] =
     db.run(UsersQuery.insert(user)).map(_ > 0)

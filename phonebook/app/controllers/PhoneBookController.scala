@@ -14,10 +14,6 @@ import models._
 import actions._
 import forms.{ ContactsForm }
 
-/**
-  * This controller creates an `Action` to handle HTTP requests to the
-  * application's home page.
-  */
 @Singleton
 class PhoneBookController @Inject() (
  val messagesApi: MessagesApi,

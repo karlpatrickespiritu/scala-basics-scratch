@@ -5,6 +5,10 @@
 # A home page
 GET   /                           controllers.HomeController.index
 
+# Admin
+GET   /admin/users                controllers.AdminUsersController.index
+GET   /admin/user/:id             controllers.AdminUsersController.viewUser(id: Int)
+
 # Authentication
 GET   /registration               controllers.AuthController.registration
 POST  /registration               controllers.AuthController.userSubmission
