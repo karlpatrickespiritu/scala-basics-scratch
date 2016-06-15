@@ -1,62 +1,33 @@
-@(userForm: Form[User])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
 @import helper._
-@helper.base {
-  <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
-  <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
-  <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
-} {
-  <section class="row">
-    <div class="columns small-12" id="content">
-      <h1>Registration</h1>
-
-      <div class="row">
-        <div class="medium-6 medium-offset-3 columns">
-          @form(action = routes.AuthController.userSubmission()) {
-
-            <input type="hidden" name="action" value="dologin">
-
-            @inputText(
-              userForm("first_name"),
-              '_showConstraints -> false,
-              '_label -> "First Name"
-            )
-
-            @inputText(
-              userForm("last_name"),
-              '_showConstraints -> false,
-              '_label -> "Last Name"
-            )
-
-            @inputText(
-              userForm("username"),
-              '_showConstraints -> false,
-              '_label -> "Username"
-            )
-
-            @inputPassword(
-              userForm("password"),
-              '_showConstraints -> false,
-              '_label -> "Password"
-            )
-
-            <button type="submit" class="button medium-12 columns">Add</button>
-          }
-        </div>
-      </div>
-
+@(userForm: Form[User])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
+@page() {
+  <h1>Registration</h1>
+  <div class="row">
+    <div class="medium-6 medium-offset-3 columns">
+      @form(action = routes.AuthController.userSubmission()) {
+        <input type="hidden" name="action" value="dologin">
+        @inputText(
+          userForm("first_name"),
+          '_showConstraints -> false,
+          '_label -> "First Name"
+        )
+        @inputText(
+          userForm("last_name"),
+          '_showConstraints -> false,
+          '_label -> "Last Name"
+        )
+        @inputText(
+          userForm("username"),
+          '_showConstraints -> false,
+          '_label -> "Username"
+        )
+        @inputPassword(
+          userForm("password"),
+          '_showConstraints -> false,
+          '_label -> "Password"
+        )
+        <button type="submit" class="button medium-12 columns">Add</button>
+      }
     </div>
-  </section>
-
-  <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.box.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.triggers.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.mediaQuery.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.motion.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.reveal.js"))"></script>
-  <script src="@routes.Assets.versioned("scripts/main.js")"></script>
-  <script src="@routes.Assets.versioned("scripts/main2.js")"></script>
-} {
-
+  </div>
 }

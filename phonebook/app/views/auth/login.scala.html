@@ -1,53 +1,25 @@
-@import models.Login
 @import helper._
 @(loginForm: Form[Login])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
-@helper.base {
-  <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
-  <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
-  <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
-} {
-  <section class="row">
-    <div class="columns small-12" id="content">
-      <h1>Login</h1>
-
-      <div class="row">
-        <div class="medium-6 medium-offset-3 columns">
-        @form(action = routes.AuthController.loginSubmission()) {
-
-          @if(flash.get("message")) {
-            @common.callout("alert", Messages("callouts.title.error"), flash.get("message").get)
-          }
-
-          @* common.inform(success, title, message)*@
-
-          @inputText(
-            loginForm("username"),
-            '_showConstraints -> false,
-            '_label -> "Username"
-          )
-
-          @inputPassword(
-            loginForm("password"),
-            '_showConstraints -> false,
-            '_label -> "Password"
-          )
-
-          <button type="submit" class="button medium-12 columns">Login</button>
-        }
-        </div>
-      </div>
-
+@page() {
+  <h1>Login</h1>
+  <div class="row">
+    <div class="medium-6 medium-offset-3 columns">
+    @form(action = routes.AuthController.loginSubmission()) {
+      @if(flash.get("message")) {
+        @common.callout("alert", Messages("callouts.title.error"), flash.get("message").get)
+      }
+      @inputText(
+        loginForm("username"),
+        '_showConstraints -> false,
+        '_label -> "Username"
+      )
+      @inputPassword(
+        loginForm("password"),
+        '_showConstraints -> false,
+        '_label -> "Password"
+      )
+      <button type="submit" class="button medium-12 columns">Login</button>
+    }
     </div>
-  </section>
-} {
-  <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.box.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.triggers.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.mediaQuery.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.motion.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.reveal.js"))"></script>
-  <script src="@routes.Assets.versioned("scripts/main.js")"></script>
-  <script src="@routes.Assets.versioned("scripts/main2.js")"></script>
+  </div>
 }

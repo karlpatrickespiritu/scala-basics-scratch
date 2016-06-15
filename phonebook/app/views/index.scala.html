@@ -1,16 +1,10 @@
 @()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session)
-@helper.base {
+@page {
   <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
   <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
 } {
-  <section class="row">
-    <div class="columns small-12" id="content">
-      <h1>Welcome Home!</h1>
-      <p class="subheader">There is beauty in space, and it is orderly. There is no weather, and there is regularity. It is predictable. Everything in space obeys the laws of physics. If you know these laws, and obey them, space will treat you kindly.</p>
-      <a href="@routes.PhoneBookController.index()" class="button">Go to Phonebook</a>
-    </div>
-  </section>
-} {
-
+  <h1>Welcome Home!</h1>
+  <p class="subheader">There is beauty in space, and it is orderly. There is no weather, and there is regularity. It is predictable. Everything in space obeys the laws of physics. If you know these laws, and obey them, space will treat you kindly.</p>
+  <a href="@routes.PhoneBookController.index()" class="button">Go to Phonebook</a>
 }

@@ -1,70 +1,44 @@
-@import models.Contact
 @(contacts: Seq[Contact])(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
-@helper.base {
-  <link href="@routes.Assets.versioned("styles/global.css")" rel="stylesheet">
-  <link href="@routes.Assets.versioned("styles/main.css")" rel="stylesheet">
-  <link href="@routes.Assets.versioned("styles/main2.css")" rel="stylesheet">
-} {
-  <section class="row phonebook">
-    <div class="columns medium-12" id="content">
-      <h1>Phonebook</h1>
-
-      @if(flash.get("message")) {
-        @common.callout("success", Messages("callouts.title.success"), flash.get("message").get)
-      }
-
-      <a href="@routes.PhoneBookController.add()" class="button float-right"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
-
-      <div class="phonebook-list">
-        @if(contacts) {
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Phone</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-            @for(contact <- contacts) {
-              <tr>
-                <td>@contact.id</td>
-                <td>@contact.first_name</td>
-                <td>@contact.last_name</td>
-                <td>@contact.phone</td>
-                <td>
-                  <div class="button-group">
-                    <a href="@routes.PhoneBookController.update(contact.id.get)" class="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a href="@routes.PhoneBookController.deleteById(contact.id.get)" class="button" onclick="return confirm('Are you sure?')"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </div>
-                </td>
-              </tr>
-            }
-            </tbody>
-          </table>
-        } else {
-          <div class="callout warning">
-            <p>@Messages("phonebookcontroller.index.contacts.empty")</p>
-            <a href="@routes.PhoneBookController.add()" class="button"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
-          </div>
+@page() {
+  <h1>Phonebook</h1>
+  @if(flash.get("message")) {
+    @common.callout("success", Messages("callouts.title.success"), flash.get("message").get)
+  }
+  <a href="@routes.PhoneBookController.add()" class="button float-right"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
+  <div class="phonebook-list">
+    @if(contacts) {
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        @for(contact <- contacts) {
+          <tr>
+            <td>@contact.id</td>
+            <td>@contact.first_name</td>
+            <td>@contact.last_name</td>
+            <td>@contact.phone</td>
+            <td>
+              <div class="button-group">
+                <a href="@routes.PhoneBookController.update(contact.id.get)" class="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <a href="@routes.PhoneBookController.deleteById(contact.id.get)" class="button" onclick="return confirm('Are you sure?')"><i class="fa fa-times" aria-hidden="true"></i></a>
+              </div>
+            </td>
+          </tr>
         }
+        </tbody>
+      </table>
+    } else {
+      <div class="callout warning">
+        <p>@Messages("phonebookcontroller.index.contacts.empty")</p>
+        <a href="@routes.PhoneBookController.add()" class="button"><i class="fa fa-plus" aria-hidden="true"></i> Add Contact</a>
       </div>
-    </div>
-  </section>
-
-
-  <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.box.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.triggers.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.mediaQuery.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.motion.js"))"></script>
-  <script src="@routes.WebJarAssets.at(wja.locate("foundation.reveal.js"))"></script>
-  <script src="@routes.Assets.versioned("scripts/main.js")"></script>
-  <script src="@routes.Assets.versioned("scripts/main2.js")"></script>
-} {
-
+    }
+  </div>
 }
