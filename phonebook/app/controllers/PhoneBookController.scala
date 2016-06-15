@@ -63,12 +63,11 @@ class PhoneBookController @Inject() (
         Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors)))
       },
       contact => {
-        val name = contact.first_name.concat(" " + contact.last_name)
         val isUpdate = !contact.id.isEmpty
         if (isUpdate) {
-          Contacts.update(contact).map { _ => Redirect(routes.PhoneBookController.index()).flashing("message" -> s"`${name}` has been updated.") }
+          Contacts.update(contact).map { _ => Redirect(routes.PhoneBookController.index()).flashing("message" -> s"`${contact.fullName}` has been updated.") }
         } else {
-          Contacts.add(contact).map { _ => Redirect(routes.PhoneBookController.add()).flashing("message" -> s"`${name}` has been created.") }
+          Contacts.add(contact).map { _ => Redirect(routes.PhoneBookController.add()).flashing("message" -> s"`${contact.fullName}` has been created.") }
         }
       }
     )

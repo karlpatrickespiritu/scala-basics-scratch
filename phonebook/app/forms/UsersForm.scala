@@ -16,7 +16,7 @@ object UsersForm {
 
   def login = Form {
     mapping(
-      "username" -> nonEmptyText,
+      "userName" -> nonEmptyText,
       "password" -> nonEmptyText
     ) (Login.apply) (Login.unapply)
   }
@@ -24,9 +24,9 @@ object UsersForm {
   def user = Form {
     mapping(
       "id" -> optional(number),
-      "first_name" -> nonEmptyText,
-      "last_name" -> nonEmptyText,
-      "username" -> nonEmptyText,
+      "firstName" -> nonEmptyText,
+      "lastName" -> nonEmptyText,
+      "userName" -> nonEmptyText,
       "password" -> nonEmptyText
     ) (User.apply) (User.unapply)
   }

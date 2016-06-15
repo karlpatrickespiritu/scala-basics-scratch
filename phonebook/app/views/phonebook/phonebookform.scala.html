@@ -20,14 +20,14 @@
             @if(contactForm("id").value) {
               <input type="hidden" name="id" value="@contactForm("id").value">
             }
-            <input type="hidden" name="user_id" value="@session.get("connected")">
+            <input type="hidden" name="userId" value="@session.get("connected")">
             @inputText(
-              contactForm("first_name"),
+              contactForm("firstName"),
               '_showConstraints -> false,
               '_label -> "First Name"
             )
             @inputText(
-              contactForm("last_name"),
+              contactForm("lastName"),
               '_showConstraints -> false,
               '_label -> "Last Name"
             )

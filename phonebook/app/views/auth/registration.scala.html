@@ -7,17 +7,17 @@
       @form(action = routes.AuthController.userSubmission()) {
         <input type="hidden" name="action" value="dologin">
         @inputText(
-          userForm("first_name"),
+          userForm("firstName"),
           '_showConstraints -> false,
           '_label -> "First Name"
         )
         @inputText(
-          userForm("last_name"),
+          userForm("lastName"),
           '_showConstraints -> false,
           '_label -> "Last Name"
         )
         @inputText(
-          userForm("username"),
+          userForm("userName"),
           '_showConstraints -> false,
           '_label -> "Username"
         )

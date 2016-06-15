@@ -20,10 +20,10 @@ class Users @Inject() (
   object UsersQuery extends TableQuery(new UsersTable(_)) {
     def insert(user: User) = this += user
     def findById(id: Int) = this.filter(_.id === id)
-    def findByFirstName(firstName: String) = this.filter(_.first_name === firstName)
-    def findByLastName(lastName: String) = this.filter(_.last_name === lastName)
-    def findByUserName(userName: String) = this.filter(_.username === userName)
-    def findByUserNameAndPassword(userName: String, password: String) = this.filter(user => (user.username === userName && user.password === password))
+    def findByFirstName(firstName: String) = this.filter(_.firstName === firstName)
+    def findByLastName(lastName: String) = this.filter(_.lastName === lastName)
+    def findByUserName(userName: String) = this.filter(_.userName === userName)
+    def findByUserNameAndPassword(userName: String, password: String) = this.filter(user => (user.userName === userName && user.password === password))
   }
 
   /**
@@ -32,12 +32,12 @@ class Users @Inject() (
     */
   class UsersTable(tag: Tag) extends Table[User](tag, "users") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-    def first_name = column[String]("first_name", O.Length(255, true))
-    def last_name = column[String]("last_name", O.Length(255, true))
-    def username = column[String]("username", O.Length(255, true))
+    def firstName = column[String]("first_name", O.Length(255, true))
+    def lastName = column[String]("last_name", O.Length(255, true))
+    def userName = column[String]("username", O.Length(255, true))
     def password = column[String]("password", O.Length(255, true))
 
-    def * = (id.?, first_name, last_name, username, password) <> (User.tupled, User.unapply)
+    def * = (id.?, firstName, lastName, userName, password) <> (User.tupled, User.unapply)
   }
 
   def getAll(): Future[Seq[User]] =
@@ -46,8 +46,8 @@ class Users @Inject() (
   def add(user: User): Future[Boolean] =
     db.run(UsersQuery.insert(user)).map(_ > 0)
 
-  def findByUserName(username: String): Future[Option[User]] =
-    db.run(UsersQuery.findByUserName(username).result.headOption)
+  def findByUserName(userName: String): Future[Option[User]] =
+    db.run(UsersQuery.findByUserName(userName).result.headOption)
 
   def findById(id: Int): Future[Option[User]] =
     db.run(UsersQuery.findById(id).result.headOption)

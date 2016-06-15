@@ -22,14 +22,14 @@ class Contacts @Inject() (
     */
   class ContactsTable(tag: Tag) extends Table[Contact](tag, "contacts") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-    def user_id = column[Int]("user_id")
-    def first_name = column[String]("first_name", O.Length(255, true))
-    def last_name = column[String]("last_name", O.Length(255, true))
+    def userId = column[Int]("user_id")
+    def firstName = column[String]("first_name", O.Length(255, true))
+    def lastName = column[String]("last_name", O.Length(255, true))
     def phone = column[String]("phone", O.Length(255, true))
 
-    def owner = foreignKey("fk_user_id", user_id, users.UsersQuery)(_.id, onUpdate = ForeignKeyAction.Restrict, onDelete = ForeignKeyAction.Cascade)
+    def owner = foreignKey("fk_userId", userId, users.UsersQuery)(_.id, onUpdate = ForeignKeyAction.Restrict, onDelete = ForeignKeyAction.Cascade)
 
-    def * = (id.?, user_id, first_name, last_name, phone) <> (Contact.tupled, Contact.unapply)
+    def * = (id.?, userId, firstName, lastName, phone) <> (Contact.tupled, Contact.unapply)
   }
 
   /**
@@ -39,10 +39,10 @@ class Contacts @Inject() (
     def insert(contact: Contact) = this += contact
     def getAll = this.sortBy(_.id.desc).result
     def findById(id: Int) = this.filter(_.id === id)
-    def findByUserId(userId: Int) = this.filter(_.user_id === userId).sortBy(_.id.desc)
-    def findByFirstName(firstName: String) = this.filter(_.first_name === firstName)
-    def findByLastName(lastName: String) = this.filter(_.last_name === lastName)
-    def findByFirstNameAndLastName(firstName: String, lastName: String) = this.filter(contact => (contact.first_name === firstName && contact.last_name === lastName))
+    def findByUserId(userId: Int) = this.filter(_.userId === userId).sortBy(_.id.desc)
+    def findByFirstName(firstName: String) = this.filter(_.firstName === firstName)
+    def findByLastName(lastName: String) = this.filter(_.lastName === lastName)
+    def findByFirstNameAndLastName(firstName: String, lastName: String) = this.filter(contact => (contact.firstName === firstName && contact.lastName === lastName))
   }
 
   def update(contact: Contact): Future[Boolean] =

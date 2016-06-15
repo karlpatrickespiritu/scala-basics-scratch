@@ -17,9 +17,9 @@ object ContactsForm {
   val contact = Form {
     mapping(
       "id" -> optional(number),
-      "user_id" -> number,
-      "first_name" -> nonEmptyText,
-      "last_name" -> nonEmptyText,
+      "userId" -> number,
+      "firstName" -> nonEmptyText,
+      "lastName" -> nonEmptyText,
       "phone" -> nonEmptyText
     )(Contact.apply) (Contact.unapply)
   }

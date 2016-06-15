@@ -2,8 +2,10 @@ package models
 
 case class Contact(
   id: Option[Int],
-  user_id: Int,
-  first_name: String,
-  last_name: String,
+  userId: Int,
+  firstName: String,
+  lastName: String,
   phone: String
-)
+) {
+  val fullName = firstName.concat(s" ${lastName}")
+}
