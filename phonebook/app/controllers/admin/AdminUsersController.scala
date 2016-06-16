@@ -19,17 +19,16 @@ class AdminUsersController @Inject()(
   val messagesApi: MessagesApi,
   val pageMetaApi: PageMetaApi,
   val Users: tables.Users,
-  val Authenticate: actions.Authenticate,
   implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
 
-  def index = Authenticate.async { implicit request =>
+  def index = AuthenticatedAction.async { implicit request =>
     Users.getAll().map {
       users => Ok(views.html.admin.users.index(users))
     }
   }
 
-  def viewUser(id: Int) = Authenticate.async { implicit require =>
+  def viewUser(id: Int) = AuthenticatedAction.async { implicit require =>
     Users.findById(id).map {
       case Some(user) => Ok(views.html.admin.users.view(user))
       case None => Ok(views.html.httpcodes.code404())

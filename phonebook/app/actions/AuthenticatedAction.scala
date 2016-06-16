@@ -1,6 +1,7 @@
 package actions
 
 import models.User
+import play.api._
 import play.api.mvc._
 
 import scala.concurrent.Future

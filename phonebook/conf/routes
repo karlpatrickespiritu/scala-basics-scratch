@@ -4,6 +4,7 @@
 
 # A home page
 GET   /                           controllers.HomeController.index
+GET   /test                       controllers.PhoneBookController.testAction
 
 # Admin
 GET   /admin/users                controllers.AdminUsersController.index
