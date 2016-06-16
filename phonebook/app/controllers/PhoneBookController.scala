@@ -1,15 +1,17 @@
 package controllers
 
 import javax.inject._
+
 import play.api._
 import play.api.mvc._
-import play.api.i18n.{ I18nSupport, MessagesApi }
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.data._
 import play.api.data.Forms._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-
-import ejisan.play.libs.{ PageMetaSupport, PageMetaApi }
+import ejisan.play.libs.{PageMetaApi, PageMetaSupport}
+import forms._
 import models._
 import actions._
 import forms.{ ContactsForm }
@@ -19,7 +21,8 @@ class PhoneBookController @Inject() (
  val messagesApi: MessagesApi,
  val pageMetaApi: PageMetaApi,
  val Contacts: tables.Contacts,
- val Authenticate: actions.Authenticate,
+ // val AuthenticatedAction: AuthenticatedAction,
+ val Authenticate: Authenticate,
  implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
 
@@ -36,7 +39,7 @@ class PhoneBookController @Inject() (
     }
   }
 
-  def deleteById(id: Int) = Action.async { implicit request =>
+  def deleteById(id: Int) = Authenticate.async { implicit request =>
     Contacts.deleteById(id).map { _ => Redirect(phoneBookPage).flashing("message" -> "Contact has been deleted.") }
   }
 
@@ -44,7 +47,7 @@ class PhoneBookController @Inject() (
     Ok(views.html.phonebook.phonebookform())
   }
 
-  def update(id: Int) = Action.async { implicit request =>
+  def update(id: Int) = Authenticate.async { implicit request =>
     Contacts.findById(id).map {
       case Some(contact) => {
         Ok(views.html.phonebook.phonebookform(ContactsForm.contact.fill(contact)))
@@ -53,7 +56,7 @@ class PhoneBookController @Inject() (
     }
   }
 
-  def formPost = Action.async { implicit request =>
+  def formPost = Authenticate.async { implicit request =>
     ContactsForm.contact.bindFromRequest.fold(
       formErrors =>  {
         Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors)))
