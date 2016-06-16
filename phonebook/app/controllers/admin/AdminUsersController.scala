@@ -18,17 +18,19 @@ import forms._
 class AdminUsersController @Inject()(
   val messagesApi: MessagesApi,
   val pageMetaApi: PageMetaApi,
+  val AuthenticatedAction: AuthenticatedAction, // v2
+  val Authenticate: Authenticate, // v1
   val Users: tables.Users,
   implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
 
-  def index = AuthenticatedAction.async { implicit request =>
+  def index = Authenticate.async { implicit request =>
     Users.getAll().map {
       users => Ok(views.html.admin.users.index(users))
     }
   }
 
-  def viewUser(id: Int) = AuthenticatedAction.async { implicit require =>
+  def viewUser(id: Int) = Authenticate.async { implicit require =>
     Users.findById(id).map {
       case Some(user) => Ok(views.html.admin.users.view(user))
       case None => Ok(views.html.httpcodes.code404())

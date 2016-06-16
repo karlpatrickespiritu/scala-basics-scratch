@@ -13,13 +13,15 @@ import scala.concurrent.Future
 import ejisan.play.libs.{ PageMetaApi, PageMetaSupport }
 import forms._
 import models._
-import actions.AuthenticatedAction
+import actions._
 import forms.{ ContactsForm }
 
 @Singleton
 class PhoneBookController @Inject() (
  val messagesApi: MessagesApi,
  val pageMetaApi: PageMetaApi,
+ val AuthenticatedAction: AuthenticatedAction, // v2
+ val Authenticate: Authenticate, // v1
  val Contacts: tables.Contacts,
  implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
@@ -30,7 +32,7 @@ class PhoneBookController @Inject() (
     Ok(request.user + "")
   }
 
-  def index = AuthenticatedAction.async { implicit request =>
+  def index = Authenticate.async { implicit request =>
     request.session.get("connected").map { userId =>
       Contacts.findByUserId(userId.toInt).map {
         contacts => Ok(views.html.phonebook.index(contacts))
@@ -40,15 +42,15 @@ class PhoneBookController @Inject() (
     }
   }
 
-  def deleteById(id: Int) = AuthenticatedAction.async { implicit request =>
+  def deleteById(id: Int) = Authenticate.async { implicit request =>
     Contacts.deleteById(id).map { _ => Redirect(phoneBookPage).flashing("message" -> "Contact has been deleted.") }
   }
 
-  def add = AuthenticatedAction { implicit request =>
+  def add = Authenticate { implicit request =>
     Ok(views.html.phonebook.phonebookform())
   }
 
-  def update(id: Int) = AuthenticatedAction.async { implicit request =>
+  def update(id: Int) = Authenticate.async { implicit request =>
     Contacts.findById(id).map {
       case Some(contact) => {
         Ok(views.html.phonebook.phonebookform(ContactsForm.contact.fill(contact)))
@@ -57,7 +59,7 @@ class PhoneBookController @Inject() (
     }
   }
 
-  def formPost = AuthenticatedAction.async { implicit request =>
+  def formPost = Authenticate.async { implicit request =>
     ContactsForm.contact.bindFromRequest.fold(
       formErrors =>  {
         Future.successful(BadRequest(views.html.phonebook.phonebookform(formErrors)))
