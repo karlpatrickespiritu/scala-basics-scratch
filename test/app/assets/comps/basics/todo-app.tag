@@ -43,7 +43,7 @@
            if (this.newItem) {
                 this.items.push({
                     title: this.newItem,
-                    done: true
+                    done: false
                 })
                this.newItem = this.inputAdd.value = ''
                console.log(this.inputAdd)

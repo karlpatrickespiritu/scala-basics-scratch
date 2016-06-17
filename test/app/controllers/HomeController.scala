@@ -40,4 +40,8 @@ class HomeController @Inject()(
     Ok(views.html.basics.todoapp())
   }
 
+  def mixin() = Action {
+    Ok(views.html.basics.mixin())
+  }
+
 }
