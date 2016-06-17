@@ -16,8 +16,9 @@
             <title>Document</title>
         </head>
         <body>
+            <todo></todo>
+            <script src="@routes.Assets.versioned("comps/todo.js")" type="riot/tag"></script>
             <script src="@routes.WebJarAssets.at(wja.locate("riot.min.js"))"></script>
-            <script src="@routes.Assets.versioned("comps/todo.js")"></script>
             <script>
                 riot.mount("*")
             </script>
