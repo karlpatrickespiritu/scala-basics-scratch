@@ -3,7 +3,7 @@
     <h3>{ opts.title }</h3>
 
     <form action="" onsubmit="{ add }">
-        <input name="inputAdd" onkeyup="{ edit }">
+        <input name="inputAdd" onkeyup="{ edit }" type="text">
         <button disabled={ !newItem } class="button">Add #{ items.length + 1}</button>
         <a disabled={ items.filter(onlyDone).length == 0 } onclick="{ removeDone }" class="button">{ items.filter(onlyDone).length } remove</a>
     </form>
