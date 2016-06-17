@@ -13,6 +13,7 @@ GET     /message                    controllers.AsyncController.message
 GET     /basics/todo                controllers.HomeController.todo
 GET     /basics/todo-app            controllers.HomeController.todoApp
 GET     /basics/mixins              controllers.HomeController.mixin
+GET     /basics/routes              controllers.HomeController.routing
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/libs/*file          controllers.WebJarAssets.at(file)

@@ -44,4 +44,8 @@ class HomeController @Inject()(
     Ok(views.html.basics.mixin())
   }
 
+  def routing() = Action {
+    Ok(views.html.basics.routing())
+  }
+
 }
