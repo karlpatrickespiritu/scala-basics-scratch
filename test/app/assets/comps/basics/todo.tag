@@ -1,6 +1,7 @@
 <todo>
 
     <!-- layout -->
+    <h1>TODO</h1>
     <h3>{ opts.title }</h3>
 
     <ul>
@@ -11,13 +12,6 @@
         <input>
         <button>Add #{ items.length + 1 }</button>
     </form>
-
-    <!-- style -->
-    <style scoped>
-        h3 {
-            font-size: 14px;
-        }
-    </style>
 
     <!-- logic -->
     <script>

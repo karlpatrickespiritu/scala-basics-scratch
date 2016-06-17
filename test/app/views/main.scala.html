@@ -4,20 +4,39 @@
  * two arguments, a `String` for the title of the page and an `Html`
  * object to insert into the body of the page.
  *@
-@(title: String)(content: Html)
-
+@(title: String)(content: Html)(implicit wja: WebJarAssets)
 <!DOCTYPE html>
 <html lang="en">
     <head>
         @* Here's where we render the page title `String`. *@
         <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
         <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+        @* FROM CDN *@
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     </head>
     <body>
         @* And here's where we render the `Html` object containing
          * the page content. *@
-        @content
+        <section class="row main-container">
+            <div class="columns small-4">
+                @content
+            </div>
+        </section>
+
+        <script src="@routes.WebJarAssets.at(wja.locate("jquery.min.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.core.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.dropdownMenu.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.keyboard.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.box.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.nest.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.triggers.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.mediaQuery.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.util.motion.js"))"></script>
+        <script src="@routes.WebJarAssets.at(wja.locate("foundation.reveal.js"))"></script>
+
     </body>
 </html>

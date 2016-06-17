@@ -9,6 +9,10 @@ GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
 GET     /message                    controllers.AsyncController.message
 
+# Basics
+GET     /basics/todo                controllers.HomeController.todo
+GET     /basics/todo-app            controllers.HomeController.todoApp
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/libs/*file          controllers.WebJarAssets.at(file)
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
