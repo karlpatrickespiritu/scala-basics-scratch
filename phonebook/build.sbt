@@ -13,6 +13,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "3.1.1",
   "com.typesafe.play" %% "play-slick" % "1.1.1",
   "com.typesafe.play" %% "play-slick-evolutions" % "1.1.1",
+  "com.typesafe.akka" %% "akka-actor" % "2.3.15",
+  "com.typesafe.akka" %% "akka-testkit" % "2.3.15" % "test",
   "org.postgresql" % "postgresql" % "9.4.1208"
 )
 

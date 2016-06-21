@@ -24,6 +24,9 @@ POST  /phonebook/add              controllers.PhoneBookController.formPost
 GET   /phonebook/update/:id       controllers.PhoneBookController.update(id: Int)
 GET   /phonebook/delete/:id       controllers.PhoneBookController.deleteById(id: Int)
 
+# Chat
+GET   /chat                       controllers.ChatController.socket
+
 # Web jars asset
 GET   /assets/libs/*file          controllers.WebJarAssets.at(file)
 
