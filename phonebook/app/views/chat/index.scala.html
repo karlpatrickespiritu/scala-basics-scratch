@@ -1,4 +1,14 @@
 @()(implicit header: RequestHeader, messages: Messages, pm: PageMeta, wja: WebJarAssets, session: Session, flash: Flash)
 @page() {
-  <h1>Chat</h1>
+    <chat></chat>
+    <script src="@routes.WebJarAssets.at(wja.locate("riot.min.js"))"></script>
+    <script src="@routes.Assets.versioned("comps/chat/chat.js")"></script>
+    <script>
+        riot.mount("chat", {
+            messages: [
+                { "message": "Hi!" },
+                { "message": "Hello!" }
+            ]
+        })
+    </script>
 }

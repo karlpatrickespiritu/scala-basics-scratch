@@ -25,10 +25,12 @@ GET   /phonebook/update/:id       controllers.PhoneBookController.update(id: Int
 GET   /phonebook/delete/:id       controllers.PhoneBookController.deleteById(id: Int)
 
 # Chat
-GET   /chat                       controllers.ChatController.socket
+GET   /chat                       controllers.ChatController.index
+GET   /websocket                  controllers.ChatController.socket
 
 # Web jars asset
 GET   /assets/libs/*file          controllers.WebJarAssets.at(file)
 
 # Map static resources from the /public folder to the /assets URL path
-GET   /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/libs/*file          controllers.WebJarAssets.at(file)
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

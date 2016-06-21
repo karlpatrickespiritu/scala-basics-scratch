@@ -8,6 +8,8 @@ scalaVersion := "2.11.8"
 
 // Dependencies
 libraryDependencies ++= Seq(
+  cache,
+  ws,
   "com.ejisan" %% "play-pagemeta" % "1.2.1",
   "com.ejisan" %% "play-form" % "2.0.2",
   "com.typesafe.slick" %% "slick" % "3.1.1",
@@ -20,10 +22,12 @@ libraryDependencies ++= Seq(
 
 // Web Jars Dependencies
 libraryDependencies ++= Seq(
+  "org.webjars" % "riot" % "2.2.4",
   "org.webjars" % "webjars-play_2.11" % "2.5.0",
   "org.webjars" % "jquery" % "2.2.2",
   "org.webjars" % "foundation" % "6.2.0"
 )
+
 dependencyOverrides += "org.webjars" % "jquery" % "2.2.2"
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 

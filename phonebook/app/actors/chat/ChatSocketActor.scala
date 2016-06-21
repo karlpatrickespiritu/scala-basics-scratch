@@ -10,7 +10,8 @@ object ChatSocketActor {
 
 class ChatSocketActor(out: ActorRef) extends Actor {
   def receive = {
-    case msg: String =>
-      out ! ("I received your message: " + msg)
+    case msg: String => {
+      out ! (msg)
+    }
   }
 }

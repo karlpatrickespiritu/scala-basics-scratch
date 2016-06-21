@@ -1,0 +1,15 @@
+run
+~compile
+run
+activator run
+run
+~compile
+run
+~compile
+run
+~compile
+run
+activator run
+run
+~compile
+run

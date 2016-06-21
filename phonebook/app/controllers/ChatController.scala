@@ -16,6 +16,7 @@ import forms._
 
 import akka.actor._
 import akka.stream._
+import actors.chat.ChatSocketActor
 
 @Singleton
 class ChatController @Inject()(
@@ -26,14 +27,20 @@ class ChatController @Inject()(
   implicit val wja: WebJarAssets
 ) extends Controller with I18nSupport with PageMetaSupport {
 
-  import actors.chat.ChatSocketActor
-
   def index = Action { implicit request =>
     Ok(views.html.chat.index());
   }
 
-  def socket = WebSocket.accept[String, String] { request =>
-    ActorFlow.actorRef(out => ChatSocketActor.props(out))
+  def socket = WebSocket.accept[String, String] { implicit request =>
+      ActorFlow.actorRef(out => ChatSocketActor.props(out))
   }
+
+//  def socket = WebSocket.acceptOrResult[String, String] { implicit request =>
+//    Future.successful(request.session.get("connected").map { userId =>
+//      Right(ActorFlow.actorRef(ChatSocketActor.props))
+//    }.getOrElse {
+//      Left(Forbidden)
+//    })
+//  }
 
 }
