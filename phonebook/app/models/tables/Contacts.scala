@@ -6,7 +6,7 @@ import slick.profile.RelationalProfile
 import play.api.db.slick. { DatabaseConfigProvider, HasDatabaseConfigProvider }
 import scala.concurrent.ExecutionContext.Implicits.global
 import models._
-import models.tables.Users
+// import models.tables.Users
 
 @Singleton
 class Contacts @Inject() (

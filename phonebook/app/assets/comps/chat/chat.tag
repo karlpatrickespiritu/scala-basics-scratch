@@ -34,6 +34,7 @@
         }
 
         chatWebSocket.onmessage = function(event) {
+            console.log(event.data)
             self.messages.push({ message: event.data })
         }
 
@@ -42,6 +43,7 @@
         }
 
         sendMessage (e) {
+            // chatWebSocket.send({ message: this.message.value })
             chatWebSocket.send(this.message.value)
         }
 
